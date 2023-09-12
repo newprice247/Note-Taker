@@ -33,7 +33,7 @@ app.use(express.static('public'));
 // })
 app.get('/api/notes/:title', (req, res) => {
     //TODO: Filter based on the parameter input from client
-    const filterResult = x => x.title === req.params.title
+    const filterResult = db.filter(x => x.title.toLowerCase() === req.params.title)
     filterResult.length === 0 ? res.statusCode = 404 : res.statusCode = 200
     res.json(filterResult)
   })
