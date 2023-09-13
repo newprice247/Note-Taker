@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const app = express()
 
 app.use(express.static('public'));
-// app.use(express.json())
+app.use(express.json())
 
 
 // app.use('/notes', notes)
@@ -56,8 +56,41 @@ app.get('/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     // res.send(`You've successfully called a ${req.method} to the API Route!`)
     // res.json(`${req.method} request recieved!`)
-    console.info(`${req.method} response recieved for the notes route!`)
+    
     // console.info(req.body)
+    
+    console.info(`${req.method} response recieved for the notes route!`)
+
+//   // Destructuring assignment for the items in req.body
+  const { title, text } = req.body;
+
+//   // If all the required properties are present
+//   if (title && text) {
+//     // Variable for the object we will save
+//     const newReview = {
+//       title,
+//       text
+//     };
+
+//     const response = {
+//       status: 'success',
+//       body: newReview,
+//     };
+
+//     console.info(response);
+//     res.status(201).json(response);
+//   } else {
+//     res.status(500).json('Error in posting review');
+//   }
+    if(req.body) {
+        const newNote = {
+            title,
+            text
+        }
+        readAndAppend(newNote, './db/db.json')
+    } else {
+        res.errored('Error in adding new note')
+    }
 })
 
 
