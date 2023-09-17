@@ -7,6 +7,7 @@ const { writeToFile, readFromFile, readAndAppend } = require('./helpers/fsUtils'
 const PORT = process.env.PORT || 3001;
 const app = express()
 
+app.use('/notes', express.static(path.join(__dirname, './public/notes.html')))
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true}))
 app.use(express.json())
@@ -20,11 +21,6 @@ app.get('/api/notes/:title', (req, res) => {
 
 app.get('/api/notes', (req, res) => {
     res.json(db)
-    console.info(`${req.method} response recieved for the notes route!`)
-})
-
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/notes.html'));
     console.info(`${req.method} response recieved for the notes route!`)
 })
 
