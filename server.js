@@ -1,13 +1,15 @@
 const express = require('express');
-// const fs = require('fs')
 const path = require('path')
 const db = require('./db/db.json')
 const uniqid = require('uniqid')
 const Note = require('./helpers/class')
-const { writeToFile, readFromFile, readAndAppend } = require('./helpers/fsUtils');
-// const notes = require('./routes/notes')
+const { readAndAppend, readAndDelete } = require('./helpers/fsUtils');
+
+
 const PORT = process.env.PORT || 3001;
 const app = express()
+
+
 app.use('/notes', express.static(path.join(__dirname, './public/notes.html')))
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }))
@@ -36,28 +38,18 @@ app.post('/api/notes', (req, res) => {
             id: uniqid()
         }
         readAndAppend(newNote, './db/db.json')
-        res.json(newNote)
+        res.json(db)
     } else {
         res.errored('Error in adding new note')
     }
 })
 
+
 app.delete('/api/notes/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile('./db/db.json')
-        .then((data) => JSON.parse(data))
-        .then((json) => {
-            console.info(json)
-            // Make a new array of all tips except the one with the ID provided in the URL
-            const result = json.filter((note) => note.id !== noteId);
-            console.info(result)
-
-            // Save that array to the filesystem
-            writeToFile('./db/db.json', result);
-            // Respond to the DELETE request
-            // res.json(`Item ${noteTitle} has been deleted 🗑️`);
-            res.json(result)
-        });
+    console.info(noteId)
+    readAndDelete(noteId, './db/db.json')
+    res.json(db)
 });
 
 app.get('/', (req, res) => {
