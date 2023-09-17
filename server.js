@@ -2,14 +2,15 @@ const express = require('express');
 // const fs = require('fs')
 const path = require('path')
 const db = require('./db/db.json')
+const uniqid = require('uniqid')
+const Note = require('./helpers/class')
 const { writeToFile, readFromFile, readAndAppend } = require('./helpers/fsUtils');
 // const notes = require('./routes/notes')
 const PORT = process.env.PORT || 3001;
 const app = express()
-
 app.use('/notes', express.static(path.join(__dirname, './public/notes.html')))
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
@@ -28,7 +29,12 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} response recieved for the notes route!`)
     if (req.body) {
-        const newNote = req.body
+        let newNote = new Note()
+        newNote = {
+            title: req.body.title,
+            text: req.body.text,
+            id: uniqid()
+        }
         readAndAppend(newNote, './db/db.json')
         res.json(newNote)
     } else {
@@ -36,23 +42,23 @@ app.post('/api/notes', (req, res) => {
     }
 })
 
-app.delete('/api/notes/:title', (req, res) => {
-    const noteTitle = req.params.title;
+app.delete('/api/notes/:id', (req, res) => {
+    const noteId = req.params.id;
     readFromFile('./db/db.json')
-      .then((data) => JSON.parse(data))
-      .then((json) => {
-        console.info(json)
-        // Make a new array of all tips except the one with the ID provided in the URL
-        const result = json.filter((note) => note.title !== noteTitle);
-        console.info(result)
-  
-        // Save that array to the filesystem
-        writeToFile('./db/db.json', result);
-        // Respond to the DELETE request
-        // res.json(`Item ${noteTitle} has been deleted 🗑️`);
-        res.json(result)
-      });
-  });
+        .then((data) => JSON.parse(data))
+        .then((json) => {
+            console.info(json)
+            // Make a new array of all tips except the one with the ID provided in the URL
+            const result = json.filter((note) => note.id !== noteId);
+            console.info(result)
+
+            // Save that array to the filesystem
+            writeToFile('./db/db.json', result);
+            // Respond to the DELETE request
+            // res.json(`Item ${noteTitle} has been deleted 🗑️`);
+            res.json(result)
+        });
+});
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
