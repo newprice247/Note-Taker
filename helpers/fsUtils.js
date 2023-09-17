@@ -2,15 +2,14 @@
 const fs = require('fs');
 const util = require('util');
 
-const readFromFile = util.promisify(fs.readFile);
+const readFromFile = util.promisify(fs.readFileSync);
 
 const writeToFile = (file, content) =>
-    fs.writeFile(file, JSON.stringify(content, null, 4), (err) =>
+    fs.writeFileSync(file, JSON.stringify(content, null, 4), (err) =>
         err ? console.error(err) : console.info(`\nData written to ${file}`)
     );
 
 const readAndDelete = (content, file) => {
-    console.log(`here is the read and delete content ${content}`)
     fs.readFile(file, 'utf-8', (err, data) => {
         if (err) {
             console.error(err)
@@ -19,7 +18,6 @@ const readAndDelete = (content, file) => {
             const result = parsedData.filter((dbNote) => dbNote.id !== content)
             writeToFile(file, result)
         }
-
     });
 }
 
