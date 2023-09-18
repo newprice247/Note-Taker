@@ -8,7 +8,7 @@ const writeToFilePromise = util.promisify(fs.writeFile)
 //Function that takes the file path and some kind of content as arguments, then writes the content to the file specified
 const writeToFile = (file, content) =>
     writeToFilePromise(file, JSON.stringify(content), (err) =>
-    err ? console.error(err) : console.log(`\nData written to ${file}`)
+    err ? console.log(err) : console.log(`\nData written to ${file}`)
 );
 
 //Handles 'DELETE' requests
