@@ -59,6 +59,7 @@ app.post('/api/notes', (req, res) => {
 
 //Handles 'DELETE' requests based on the stored id of the note the user wants to delete
 app.delete('/api/notes/:id', (req, res) => {
+    console.info(`${req.method} response recieved for the notes route!`)
     //Sets the id to a variable
     const noteId = req.params.id;
     //Calls a function to read the data stored in the 'db.json' file, filter out the soon to be deleted object with an id matching the 'noteID' variable, then writes the leftover objects back into the 'db.json' file
