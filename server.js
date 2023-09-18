@@ -12,7 +12,7 @@ const Note = require('./helpers/class')
 const { readAndAppend, readAndDelete } = require('./helpers/fsUtils');
 
 //For use in external services such as heroku, it says "Use the port number you want to use, or 3001"
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT
 //Sets express function to variable for use in managing requests
 const app = express()
 
