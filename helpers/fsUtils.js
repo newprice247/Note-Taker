@@ -6,7 +6,7 @@ const readFromFilePromise = util.promisify(fs.readFile);
 const writeToFilePromise = util.promisify(fs.writeFile)
 
 const  writeToFile= (file, content) =>
-    writeToFilePromise(file, JSON.stringify(content, null, 4), (err) =>
+    writeToFilePromise(file, JSON.stringify(content), (err) =>
         err ? console.error(err) : console.info(`\nData written to ${file}`)
     );
 

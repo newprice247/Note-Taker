@@ -44,17 +44,14 @@ app.post('/api/notes', (req, res) => {
     //If the server recieves a json payload, a new 'note' object is created based on the imported Note class, using the key-value pairs stored in the json payload, and creates a unique ID with the 'uniqid' node module.
     if (req.body) {
         let newNote = new Note()
-        newNote = {
-            title: req.body.title,
-            text: req.body.text,
-            id: uniqid()
-        }
+        newNote = { title: req.body.title, text: req.body.text, id: uniqid() }
         //Calls a function to read the 'db.json' file, parses that data, pushes the newNote object into the resulting array, and then writes the data back into the 'db.json' file
         readAndAppend(newNote, './db/db.json')
-        res.json(db)
+        
     } else {
         res.errored('Error in adding new note')
     }
+    res.json(db)
 })
 
 //Handles 'DELETE' requests based on the stored id of the note the user wants to delete
