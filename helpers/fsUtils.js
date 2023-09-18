@@ -30,6 +30,7 @@ const readAndDelete = (content, file) => {
 //Function that reads and pulls data from a specified file, parses the data found in the file, then adds the specified content into the array of data and rewrites the data back into it's original file.
 const readAndAppend = (content, file) => {
     readFromFilePromise(file, 'utf-8', (err, data) => {
+        console.log(content)
         if (err) {
             console.error(err)
         } else {
