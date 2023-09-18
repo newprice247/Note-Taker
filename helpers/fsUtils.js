@@ -8,7 +8,7 @@ const readFromFile = util.promisify(fs.readFile);
 //Function that takes the file path and some kind of content as arguments, then writes the content to the file specified
 const writeToFile = (file, content) =>
     fs.writeFile(file, JSON.stringify(content), (err) =>
-    err ? console.log(err) : console.log(`\nData written to ${file}${content}`)
+    err ? console.log(err) : console.log(`\nData written to ${file}`)
 );
 
 //Handles 'DELETE' requests
@@ -21,7 +21,6 @@ const readAndDelete = (content, file) => {
         } else {
             const parsedData = JSON.parse(data)
             const result = parsedData.filter((dbNote) => dbNote.id !== content)
-            console.log(result)
             writeToFile(file, result)
         }
     });
@@ -37,7 +36,6 @@ const readAndAppend = (content, file) => {
         } else {
             const parsedData = JSON.parse(data)
             parsedData.push(content)
-            console.log(parsedData)
             writeToFile(file, parsedData)
         }
     });

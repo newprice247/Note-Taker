@@ -42,14 +42,13 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     console.info(`${req.method} response recieved for the notes route!`)
     //If the server recieves a json payload, a new 'note' object is created based on the imported Note class, using the key-value pairs stored in the json payload, and creates a unique ID with the 'uniqid' node module.
-    if (req.body) {
+    if (req.body.title && req.body.text) {
         let newNote = new Note()
         newNote = { title: req.body.title, text: req.body.text, id: uniqid() }
         //Calls a function to read the 'db.json' file, parses that data, pushes the newNote object into the resulting array, and then writes the data back into the 'db.json' file
         readAndAppend(newNote, './db/db.json')
-        console.log(newNote)
     } else {
-        res.errored('Error in adding new note')
+        res.errored('Error in adding new note, make sure you have both title and text')
     }
     //Reads from file the new notes array, parses the data, and responds to the client
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
