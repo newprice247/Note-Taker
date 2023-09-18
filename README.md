@@ -32,6 +32,10 @@
   * Your saved notes can be viewed by clicking on the title of the note, located on the left side of the page
   * If you would like to delete a note, just click the red trashcan icon next to the note you would like deleted
 
+  ## Demo
+
+  ![Demo Gif](<./assets/Untitled_ Sep 18, 2023 3_06 PM.gif>)
+
   ## Contribution
 
   Send me feedback!
