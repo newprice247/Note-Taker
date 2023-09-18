@@ -6,12 +6,13 @@ const util = require('util');
 const readFromFilePromise = util.promisify(fs.readFile);
 const writeToFilePromise = util.promisify(fs.writeFile)
 //Function that takes the file path and some kind of content as arguments, then writes the content to the file specified
-const  writeToFile= (file, content) =>
+const writeToFile = (file, content) =>
     writeToFilePromise(file, JSON.stringify(content), (err) =>
         err ? console.error(err) : console.info(`\nData written to ${file}`)
     );
-//Function that reads and pulls data from a specified file, parses the 'data' found in that file, filters out the specified 'content', then rewrites the leftover 'data' back into the original file.
+
 //Handles 'DELETE' requests
+//Function that reads and pulls data from a specified file, parses the 'data' found in that file, filters out the specified 'content', then rewrites the leftover 'data' back into the original file.
 const readAndDelete = (content, file) => {
     readFromFilePromise(file, 'utf-8', (err, data) => {
         console.log(content)
@@ -24,8 +25,9 @@ const readAndDelete = (content, file) => {
         }
     });
 }
-//Function that reads and pulls data from a specified file, parses the data found in the file, then adds the specified content into the array of data and rewrites the data back into it's original file.
+
 //Handles 'POST' requests
+//Function that reads and pulls data from a specified file, parses the data found in the file, then adds the specified content into the array of data and rewrites the data back into it's original file.
 const readAndAppend = (content, file) => {
     readFromFilePromise(file, 'utf-8', (err, data) => {
         if (err) {

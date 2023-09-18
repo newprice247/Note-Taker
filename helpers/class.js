@@ -9,4 +9,4 @@ class Note {
 }
 
 //Exports 'Note' class
-module.exports = ( Note )
+module.exports = (Note)

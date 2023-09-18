@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3001;
 //Sets express function to variable for use in managing requests
 const app = express()
 
-//Sets route for '/notes' path, and defaults the 'get' request for that route
+//Sets route for '/notes' path, and defaults the 'GET' request for that route
 app.use('/notes', express.static(path.join(__dirname, './public/notes.html')))
 //Serves static files from the public directory, and allows the server to access them through their relative paths
 app.use(express.static('public'));
@@ -47,7 +47,6 @@ app.post('/api/notes', (req, res) => {
         newNote = { title: req.body.title, text: req.body.text, id: uniqid() }
         //Calls a function to read the 'db.json' file, parses that data, pushes the newNote object into the resulting array, and then writes the data back into the 'db.json' file
         readAndAppend(newNote, './db/db.json')
-        
     } else {
         res.errored('Error in adding new note')
     }
