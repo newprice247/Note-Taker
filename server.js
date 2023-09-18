@@ -51,7 +51,7 @@ app.post('/api/notes', (req, res) => {
     } else {
         res.errored('Error in adding new note')
     }
-    console.log(db)
+    //Reads from file the new notes array, parses the data, and responds to the client
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 })
 
@@ -62,6 +62,7 @@ app.delete('/api/notes/:id', (req, res) => {
     const noteId = req.params.id;
     //Calls a function to read the data stored in the 'db.json' file, filter out the soon to be deleted object with an id matching the 'noteID' variable, then writes the leftover objects back into the 'db.json' file
     readAndDelete(noteId, './db/db.json')
+    //Reads from file the new notes array, parses the data, and responds to the client
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
