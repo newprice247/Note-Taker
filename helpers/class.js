@@ -1,3 +1,5 @@
+//Stores the Note class used in storing notes to the 'db.json' file
+
 class Note {
     constructor(title, text, id) {
         title = this.title;
@@ -6,4 +8,5 @@ class Note {
     }
 }
 
+//Exports 'Note' class
 module.exports = ( Note )
