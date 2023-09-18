@@ -47,9 +47,11 @@ app.post('/api/notes', (req, res) => {
         newNote = { title: req.body.title, text: req.body.text, id: uniqid() }
         //Calls a function to read the 'db.json' file, parses that data, pushes the newNote object into the resulting array, and then writes the data back into the 'db.json' file
         readAndAppend(newNote, './db/db.json')
+        console.log(newNote)
     } else {
         res.errored('Error in adding new note')
     }
+    console.log(db)
     res.json(db)
 })
 
