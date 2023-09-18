@@ -3,8 +3,8 @@ const fs = require('fs');
 //Imports node module for altering utility behaviors
 const util = require('util');
 //Alters the behavior of the 'readFile' and 'writeFile' methods of the 'fs' module
-const readFromFilePromise = util.promisify(fs.readFile);
-const writeToFilePromise = util.promisify(fs.writeFile)
+const readFromFile = util.promisify(fs.readFile);
+// const writeToFilePromise = util.promisify(fs.writeFile)
 //Function that takes the file path and some kind of content as arguments, then writes the content to the file specified
 const writeToFile = (file, content) =>
     fs.writeFile(file, JSON.stringify(content), (err) =>
@@ -44,4 +44,4 @@ const readAndAppend = (content, file) => {
 };
 
 //Exports the functions that handle 'DELETE' and 'POST' requests
-module.exports = { readAndAppend, readAndDelete };
+module.exports = { readFromFile, readAndAppend, readAndDelete };

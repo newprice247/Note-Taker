@@ -9,7 +9,7 @@ const uniqid = require('uniqid')
 //Imports the Note class for structuring the user's notes
 const Note = require('./helpers/class')
 //Imports functions that read and either add or delete notes from the db.json file
-const { readAndAppend, readAndDelete } = require('./helpers/fsUtils');
+const { readFromFile, readAndAppend, readAndDelete } = require('./helpers/fsUtils');
 
 //For use in external services such as heroku, it says "Use the port number you want to use, or 3001"
 const PORT = process.env.PORT || 3001
@@ -34,7 +34,7 @@ app.get('/api/notes/:title', (req, res) => {
 //Handles 'GET' requests to the '/api/notes' route
 //Responds with the note data stored in the 'db.json' file
 app.get('/api/notes', (req, res) => {
-    res.json(db)
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
     console.info(`${req.method} response recieved for the notes route!`)
 })
 
@@ -52,7 +52,7 @@ app.post('/api/notes', (req, res) => {
         res.errored('Error in adding new note')
     }
     console.log(db)
-    res.json(db)
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 })
 
 //Handles 'DELETE' requests based on the stored id of the note the user wants to delete
@@ -62,7 +62,7 @@ app.delete('/api/notes/:id', (req, res) => {
     const noteId = req.params.id;
     //Calls a function to read the data stored in the 'db.json' file, filter out the soon to be deleted object with an id matching the 'noteID' variable, then writes the leftover objects back into the 'db.json' file
     readAndDelete(noteId, './db/db.json')
-    res.json(db)
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
 //Handles the default 'GET' request if no route is specified
